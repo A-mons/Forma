@@ -1,36 +1,148 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FORMA
 
-## Getting Started
+Financial infrastructure for senior creative independents.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Overview
+
+FORMA is a SaaS platform designed to streamline the workflow of freelancers and studios from quote creation to payment collection.
+
+It replaces fragmented tools (PDFs, email, Notion, Stripe) with a single structured system.
+
+---
+
+## MVP Scope
+
+The product follows a strict "happy path":
+
+1. User signs in (magic link)
+2. Creates a client
+3. Builds a quote using structured blocks
+4. Sends a shareable link
+5. Client views and signs the quote
+6. Invoice is automatically generated
+7. Client pays via Stripe
+8. Payment is confirmed
+
+---
+
+## Tech Stack
+
+* **Frontend / Backend:** Next.js 14 (App Router)
+* **Language:** TypeScript (strict mode)
+* **Database & Auth:** Supabase (PostgreSQL + RLS)
+* **Payments:** Stripe (Payment Links)
+* **Emails:** Resend (React Email)
+* **Background Jobs:** Inngest
+* **Deployment:** Vercel
+
+---
+
+## Architecture Principles
+
+* Server-first (React Server Components)
+* Strict type safety (TypeScript + Zod)
+* Database-level security (Row Level Security)
+* Minimal scope (MVP discipline)
+* Event-driven side effects (Inngest)
+
+---
+
+## Project Structure
+
+```
+app/
+  (auth)/
+  (dashboard)/
+  api/
+  portal/
+
+components/
+lib/
+types/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Authentication
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* Magic link authentication via Supabase
+* No passwords
+* Session handled via cookies
+* Middleware protects dashboard routes
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Core Concepts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Clients
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Basic entities representing customers.
 
-## Deploy on Vercel
+### Quotes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Structured documents composed of blocks:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* Hero
+* Scope
+* Pricing
+* Terms
+
+Stored as JSONB in PostgreSQL.
+
+### Portal
+
+Public shareable link for clients:
+
+* View quote
+* Sign agreement
+
+### Invoices
+
+Auto-generated after signature.
+
+---
+
+## Development
+
+### Setup
+
+```bash
+npm install
+npm run dev
+```
+
+Create `.env.local`:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+```
+
+---
+
+## Status
+
+* ✅ Auth (magic link)
+* 🚧 Clients (in progress)
+* ⏳ Quotes
+* ⏳ Client portal
+* ⏳ Payments
+
+---
+
+## Philosophy
+
+If a feature does not directly help:
+→ send a quote
+→ get it signed
+→ get paid
+
+It does not belong in the MVP.
+
+---
+
+## License
+
+Private project.

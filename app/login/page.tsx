@@ -14,6 +14,7 @@
     const searchParams = useSearchParams()
     const callbackError = searchParams.get('error')
 
+    // Client-side Supabase instance used for auth actions on the login page
     const supabase = createClient()
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -21,10 +22,11 @@
         setLoading(true)
         setError(null)
 
+        // Send magic link to the provided email address
         const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
-            // After clicking the link, Supabase redirects here
+            // Redirect user to auth callback handler after email verification
             emailRedirectTo: `${window.location.origin}/auth/callback`,
         },
         })
@@ -97,7 +99,7 @@
                 placeholder="lea@studio.com"
                 required
                 autoFocus
-                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm
+                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm text-gray-900
                         placeholder:text-gray-400
                         focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent
                         transition-shadow"

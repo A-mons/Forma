@@ -11,11 +11,11 @@
         const { error } = await supabase.auth.exchangeCodeForSession(code)
 
         if (!error) {
-        // Session is now set — redirect to the dashboard
+        // Exchange successful: session established, redirect to dashboard
         return NextResponse.redirect(`${origin}/dashboard`)
         }
     }
 
-    // Code was missing or exchange failed — send back to login with an error flag
+    // Exchange failed or code missing: redirect to login with error indicator
     return NextResponse.redirect(`${origin}/login?error=auth_callback_failed`)
     }

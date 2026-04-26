@@ -13,7 +13,7 @@
         const supabase = createClient()
         await supabase.auth.signOut()
         router.push('/login')
-        router.refresh() // Clear any cached server component data
+        router.refresh() 
     }
 
     return (

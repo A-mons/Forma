@@ -2,12 +2,14 @@
     import { NextResponse, type NextRequest } from 'next/server'
 
     export async function middleware(request: NextRequest) {
+    // Maintain request headers and prepare the response object for cookie proxying
     let response = NextResponse.next({
         request: {
         headers: request.headers,
         },
     })
 
+    // Create a Supabase server client using request cookies for SSR auth
     const supabase = createServerClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -39,12 +41,14 @@
 
     const pathname = request.nextUrl.pathname
 
+    // Protect dashboard routes by redirecting unauthenticated users to login
     if (pathname.startsWith('/dashboard') && !user) {
         const loginUrl = new URL('/login', request.url)
         return NextResponse.redirect(loginUrl)
     }
 
     if (pathname === '/login' && user) {
+        // Prevent signed-in users from accessing the login page again
         const dashboardUrl = new URL('/dashboard', request.url)
         return NextResponse.redirect(dashboardUrl)
     }

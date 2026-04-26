@@ -1,5 +1,6 @@
     import { createClient } from '@/lib/supabase/server'
     import { redirect } from 'next/navigation'
+    import Link from 'next/link'
     import SignOutButton from './_components/SignOutButton'
 
     export default async function DashboardLayout({
@@ -9,9 +10,8 @@
     }) {
     const supabase = createClient()
 
-    // This is a second line of defense — middleware already redirected
-    // unauthenticated users, but we check again here defensively.
-    // getUser() validates server-side — safe.
+    // Verify user authentication at layout level (secondary check after middleware)
+    // Ensures protected routes cannot be accessed without valid session
     const {
         data: { user },
     } = await supabase.auth.getUser()
@@ -25,7 +25,6 @@
         <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-14">
-                {/* Logo */}
                 <div className="flex items-center gap-3">
                 <div className="w-6 h-6 bg-gray-900 rounded" />
                 <span className="font-semibold text-gray-900 text-sm tracking-tight">
@@ -33,12 +32,23 @@
                 </span>
                 </div>
 
-                {/* Nav — empty for now, quotes/invoices/clients come later */}
                 <nav className="hidden sm:flex items-center gap-1">
-                {/* Placeholder — you'll add links here in future sprints */}
+                  <Link
+                    href="/dashboard"
+                    className="px-3 py-1.5 text-sm text-gray-500 hover:text-gray-900
+                               hover:bg-gray-100 rounded-md transition-colors"
+                  >
+                    Dashboard
+                  </Link>
+                  <Link
+                    href="/clients"
+                    className="px-3 py-1.5 text-sm text-gray-500 hover:text-gray-900
+                               hover:bg-gray-100 rounded-md transition-colors"
+                  >
+                    Clients
+                  </Link>
                 </nav>
 
-                {/* User + sign out */}
                 <div className="flex items-center gap-4">
                 <span className="text-sm text-gray-400 hidden sm:block">
                     {user.email}

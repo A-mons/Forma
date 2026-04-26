@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 
 export default function RootPage() {
-  // Middleware redirects /dashboard → /login if unauthenticated
-  // So this effectively becomes: authenticated → /dashboard, else → /login
+  // Redirect authenticated users to dashboard, unauthenticated to login
+  // Middleware handles initial routing, this is the fallback redirect
   redirect('/dashboard')
 }

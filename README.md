@@ -124,11 +124,31 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=
 
 ## Status
 
-* ✅ Auth (magic link)
-* 🚧 Clients (in progress)
-* ⏳ Quotes
-* ⏳ Client portal
-* ⏳ Payments
+### Done
+
+- [x] Auth with Supabase magic link
+- [x] Protected dashboard routes
+- [x] Dashboard header navigation
+- [x] Client listing page
+- [x] Client creation form
+- [x] Clients API endpoints
+- [x] Client TypeScript type
+- [x] Quotes listing page
+- [x] Quote creation page and form
+- [x] Quotes API endpoint
+- [x] Quote TypeScript types
+- [x] Basic quote/client ownership validation
+
+### In Progress
+
+- [ ] Quote builder with structured blocks
+- [ ] Quote detail/edit page
+- [ ] Shareable client quote portal
+- [ ] Client signature flow
+- [ ] Invoice generation after signature
+- [ ] Stripe payment flow
+- [ ] Email notifications
+- [ ] Background jobs
 
 ---
 
